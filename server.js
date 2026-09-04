@@ -10,12 +10,24 @@ app.get("/",(req,res) => {
     res.send("Server is working");
 })
 
+app.get("/notes/:id", (req,res) => {
+    const id = Number(req.params.id);
+
+    const note = notes.find(note => note.id === id);
+
+    res.json(note);
+})
+
 app.get("/notes", (req,res) => {
     res.json(notes);
 })
 
 app.post("/notes", (req,res) => {
-    const note = req.body;
+    const note = {
+        id : notes.length + 1,
+        title : req.body.title,
+        content : req.body.content
+    };
 
     notes.push(note);
 
